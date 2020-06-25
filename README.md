@@ -3,8 +3,14 @@ Simulations for sample pooling for DNA Sudoku, 2D Pooling, S-Stage, binary split
 The simulation results provide the number of tests, steps, and pipettings required to identify all positive samples (randomly arranged) in N samples.
 
 # Installation
+
+Clone repo
+```
+git clone https://github.com/FofanovLab/sample_pooling_sims.git
+```
 Create a conda environment
 ```
+cd sample_pooling_sims
 conda create --name <myenv> --file requirements.txt
 ```
 Activate environment
