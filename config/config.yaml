@@ -1,0 +1,28 @@
+# List of number of samples to use (int)
+n_samples:
+  - 96
+  - 384
+  - 1536
+
+  # List of numbers of positive samples (int)
+n_positive:
+  - 1
+  - 2
+  - 3
+
+# List of expected postive samples (int)
+exp_positive:
+  - 1
+  - 2
+  - 3
+
+# List of multichannel pipettes to use (int)
+n_channel:
+  - 1
+  - 8
+  - 16
+
+  # Number of reps per parameter combination (int)
+reps: 100
+
+

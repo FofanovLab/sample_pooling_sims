@@ -1,0 +1,150 @@
+
+N = [96 * i for i in [1, 4, 16]]
+K = list(range(1, 21))
+R = list(range(1, 3))
+P = [1, 8, 16]
+E = list(range(1, 21))
+
+
+rule all:
+    input:
+        dna_sudoku = "dna_sudoku_results.csv",
+        two_d_pooling = "two_d_pooling_results.csv",
+        s_stage = "s_stage_results.csv",
+        modified_3_stage = "modified_3_stage_results.csv",
+        generalized_binary_splitting = "generalized_binary_splitting_results.csv",
+        binary_splitting_by_halving = "binary_splitting_by_halving_results.csv"
+
+
+rule dna_sudoku:
+    output: "dna_sudoku/result_{n}_{k}_{r}.csv"
+    conda: "envs/main_env.yaml"
+    params:
+        N = lambda wc: wc.n,
+        K = lambda wc: wc.k,
+        R = lambda wc: wc.r
+    script: "scripts/dna_sudoku.py"
+
+
+rule cat_dna_sudoku:
+    input:
+        expand(
+            "dna_sudoku/result_{n}_{k}_{r}.csv",
+            n=N, k=K, r=R)
+    output: "dna_sudoku_results.csv"
+    run:
+        from scripts.utils import cat_csvs
+        cat_csvs(input, output[0])
+
+
+rule two_d_pooling:
+    output: "two_d_pooling/result_{n}_{k}_{r}.csv"
+    conda: "envs/main_env.yaml"
+    params:
+        N = lambda wc: wc.n,
+        K = lambda wc: wc.k,
+        R = lambda wc: wc.r,
+        P = P
+    script: "scripts/two_d_pooling.py"
+
+
+rule cat_two_d_pooling:
+    input:
+        expand(
+            "two_d_pooling/result_{n}_{k}_{r}.csv",
+            n=N, k=K, r=R)
+    output: "two_d_pooling_results.csv"
+    run:
+        from scripts.utils import cat_csvs
+        cat_csvs(input, output[0])
+
+
+rule s_stage:
+    output: "s_stage/result_{n}_{k}_{r}.csv"
+    conda: "envs/main_env.yaml"
+    params:
+        N = lambda wc: wc.n,
+        K = lambda wc: wc.k,
+        R = lambda wc: wc.r,
+        P = P,
+        E = E
+    script: "scripts/s_stage.py"
+
+rule cat_s_stage:
+    input:
+        expand(
+            "s_stage/result_{n}_{k}_{r}.csv",
+            n=N, k=K, r=R)
+    output: "s_stage_results.csv"
+    run:
+        from scripts.utils import cat_csvs
+        cat_csvs(input, output[0])
+
+
+rule modified_3_stage:
+    output: "modified_3_stage/result_{n}_{k}_{r}.csv"
+    conda: "envs/main_env.yaml"
+    params:
+        N = lambda wc: wc.n,
+        K = lambda wc: wc.k,
+        R = lambda wc: wc.r,
+        P = P,
+        E = E
+    script: "scripts/modified_3_stage.py"
+
+rule cat_modified_3_stage:
+    input:
+        expand(
+            "modified_3_stage/result_{n}_{k}_{r}.csv",
+            n=N, k=K, r=R)
+    output: "modified_3_stage_results.csv"
+    run:
+        from scripts.utils import cat_csvs
+        cat_csvs(input, output[0])
+
+
+rule generalized_binary_splitting:
+    output: "generalized_binary_splitting/result_{n}_{k}_{r}.csv"
+    conda: "envs/main_env.yaml"
+    params:
+        N = lambda wc: wc.n,
+        K = lambda wc: wc.k,
+        R = lambda wc: wc.r,
+        P = P,
+        E = E
+    script: "scripts/generalized_binary_splitting.py"
+
+
+rule cat_generalized_binary_splitting:
+    input:
+        expand(
+            "generalized_binary_splitting/result_{n}_{k}_{r}.csv",
+            n=N, k=K, r=R)
+    output: "generalized_binary_splitting_results.csv"
+
+    run:
+        from scripts.utils import cat_csvs
+        cat_csvs(input, output[0])
+
+
+rule binary_splitting_by_halving:
+    output: "binary_splitting_by_halving/result_{n}_{k}_{r}.csv"
+    conda: "envs/main_env.yaml"
+    params:
+        N = lambda wc: wc.n,
+        K = lambda wc: wc.k,
+        R = lambda wc: wc.r,
+        P = P
+    script: "scripts/binary_splitting_by_halving.py"
+
+
+rule cat_binary_splitting_by_halving:
+    input:
+        expand(
+            "binary_splitting_by_halving/result_{n}_{k}_{r}.csv",
+            n=N, k=K, r=R)
+    output: "binary_splitting_by_halving_results.csv"
+
+    run:
+        from scripts.utils import cat_csvs
+        cat_csvs(input, output[0])
